@@ -8,7 +8,7 @@ function auth(){
         data: formData,
         success: function(data){
             if(data["status"]=="yes"){
-                document.location.href = '/main';
+                document.location.href = '/old/main';
             }else{
                 $(".status").text("STATUS: wrong password");
             }
@@ -74,7 +74,7 @@ function settings_db_error(){
 function save_pump(json_object){
     $.ajax({
         type: "POST",
-        url: "/api/pump/save",
+        url: "/api/trk/save",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         data: json_object,
