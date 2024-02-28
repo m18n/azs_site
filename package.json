@@ -7,7 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "type-check": "vue-tsc",
-    "fix": "prettier --write --semi=false .",
+    "fix": "prettier --write .",
     "prepare": "husky"
   },
   "dependencies": {
