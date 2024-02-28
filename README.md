@@ -25,3 +25,7 @@ pnpm build
 ## Legacy
 
 folder `/public/old/*` - contains all legacy code, rendered or served by back-end.
+
+## Public folder
+
+Place all files that should be just copied to public folder into `/public/public` folder, so their absolute path starts with `/public`.
