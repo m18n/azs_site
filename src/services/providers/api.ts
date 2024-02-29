@@ -1,4 +1,4 @@
-const baseURL = import.meta.env.VITE_BASE_URL
+const baseURL = import.meta.env.VITE_BASE_URL ?? ""
 
 const api = {
   async get<T>(url: string): Promise<T> {
