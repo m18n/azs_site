@@ -13,12 +13,14 @@
   "dependencies": {
     "@formkit/i18n": "^1.5.9",
     "@formkit/vue": "^1.5.9",
+    "clone-deep": "^4.0.1",
     "naive-ui": "^2.38.1",
     "vue": "^3.4.19",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@formkit/core": "^1.5.9",
+    "@types/clone-deep": "^4.0.4",
     "@types/node": "^20.11.20",
     "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.4.18",

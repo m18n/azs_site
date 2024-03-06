@@ -6,6 +6,18 @@ const api = {
     const data = await response.json()
     return data as T
   },
+  async post<T, D>(url: string, data: D): Promise<T> {
+    const headers = new Headers()
+    headers.set("Content-Type", "application/json")
+
+    const response = await fetch(`${baseURL}/api${url}`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers,
+    })
+    const responseData = await response.json()
+    return responseData as T
+  },
 }
 
 export default api

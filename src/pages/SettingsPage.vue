@@ -13,14 +13,15 @@
         </n-list>
 
         <n-modal
+          v-if="selectedProduct"
           v-model:show="showSelectedProduct"
           preset="card"
           :style="{ width: '600px' }"
-          :title="selectedProduct?.name_p_f"
+          :title="selectedProduct.name_p_f"
           :bordered="false"
           size="huge"
         >
-          <pre>{{ selectedProduct }}</pre>
+          <ProductEditForm :product="selectedProduct" @update="saveSelectedProduct" />
         </n-modal>
       </n-grid-item>
 
@@ -85,18 +86,36 @@ import type { Tank } from "@/models/Tank"
 import type { Product } from "@/models/Product"
 import type { Pist, Trk } from "@/models/Trk"
 
-import { getAllSettings } from "@/services/api/settings/get-all"
 import ProductTitle from "@/components/common/ProductTitle.vue"
+import ProductEditForm from "@/components/common/ProductEditForm.vue"
+
+import { getAllSettings } from "@/services/api/settings/get-all"
+import { setAllSettings } from "@/services/api/settings/set-all"
 
 const tanks = ref<Tank[]>([])
 const products = ref<Product[]>([])
 const trks = ref<Trk[]>([])
+
+const saveChangedData = async () => {
+  await setAllSettings({
+    tanks: tanks.value,
+    trks: trks.value,
+    tovars: products.value,
+  })
+}
 
 const showSelectedProduct = ref(false)
 const selectedProduct = ref<Product | null>(null)
 const showProduct = (product: Product) => {
   selectedProduct.value = product
   showSelectedProduct.value = true
+}
+const saveSelectedProduct = async (product: Product) => {
+  const productIndex = products.value.findIndex((p) => p.id_tovar === product.id_tovar)
+  selectedProduct.value = product
+  products.value[productIndex] = product
+
+  await saveChangedData()
 }
 
 const showSelectedTrk = ref(false)
