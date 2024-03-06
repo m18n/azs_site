@@ -1,5 +1,7 @@
 import "virtual:uno.css"
 
+import "@/assets/styles/components/n-list.css"
+
 import { createApp } from "vue"
 
 import App from "@/App.vue"

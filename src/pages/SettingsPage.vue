@@ -1,7 +1,7 @@
 <template>
   <main class="px-3">
     <n-grid x-gap="12" :cols="3">
-      <n-grid-item>
+      <n-grid-item class="max-h-[50dvh] overflow-auto">
         <n-list hoverable clickable>
           <template #header>
             <div class="text-lg font-bold">Види палива</div>
@@ -24,7 +24,7 @@
         </n-modal>
       </n-grid-item>
 
-      <n-grid-item>
+      <n-grid-item class="max-h-[50dvh] overflow-auto">
         <n-list>
           <template #header>
             <div class="text-lg font-bold">Резервуари</div>
@@ -41,7 +41,7 @@
         </n-list>
       </n-grid-item>
 
-      <n-grid-item>
+      <n-grid-item class="max-h-[50dvh] overflow-auto">
         <n-list hoverable clickable>
           <template #header>
             <div class="text-lg font-bold">Колонки</div>
