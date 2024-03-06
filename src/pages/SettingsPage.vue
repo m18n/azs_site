@@ -30,11 +30,11 @@
             <div class="text-lg font-bold">Резервуари</div>
           </template>
 
-          <n-list-item v-for="tank in visibleTanks" :key="tank.id_tank">
+          <n-list-item v-for="tank in tanks" :key="tank.id_tank">
             <n-thing>
               <template #header>
                 {{ tank.id_tank }}.
-                <ProductTitle :product="getProductByTank(tank)" :uncolored="!selectedTrk"></ProductTitle>
+                <ProductTitle :product="getProductByTank(tank)" uncolored></ProductTitle>
               </template>
             </n-thing>
           </n-list-item>
@@ -48,15 +48,29 @@
           </template>
 
           <n-list-item v-for="trk in trks" :key="trk.id_trk" @click="toggleTrk(trk)">
-            <n-thing :title="`TRK ${trk.id_trk}`">
-              <template v-if="selectedTrk?.id_trk === trk.id_trk" #description>
-                <div v-for="pist in selectedTrk.pists" :key="pist.id_pist" @click.stop="showProduct(getProductByPist(pist))">
-                  <ProductTitle class="font-bold" :product="getProductByPist(pist)"></ProductTitle>
-                </div>
-              </template>
-            </n-thing>
+            <n-thing :title="`TRK ${trk.id_trk}`" />
           </n-list-item>
         </n-list>
+
+        <n-modal
+          v-if="selectedTrk"
+          v-model:show="showSelectedTrk"
+          preset="card"
+          :style="{ width: '600px' }"
+          :title="`TRK ${selectedTrk.id_trk}`"
+          :bordered="false"
+          size="huge"
+        >
+          <n-thing>
+            <template #description>
+              <div v-for="pist in selectedTrk.pists" :key="pist.id_pist" class="flex items-center gap-3 mb-2 last:mb-0">
+                <n-select v-model:value="pist.id_tank" :options="tankOptions" class="w-20" />
+                ->
+                <ProductTitle class="font-bold cursor-pointer" :product="getProductByPist(pist)" @click.stop="showProduct(getProductByPist(pist))" />
+              </div>
+            </template>
+          </n-thing>
+        </n-modal>
       </n-grid-item>
     </n-grid>
   </main>
@@ -65,7 +79,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue"
 
-import { NList, NListItem, NThing, NGrid, NGridItem, NModal } from "naive-ui"
+import { NList, NListItem, NThing, NGrid, NGridItem, NModal, NSelect, type SelectOption } from "naive-ui"
 
 import type { Tank } from "@/models/Tank"
 import type { Product } from "@/models/Product"
@@ -85,31 +99,32 @@ const showProduct = (product: Product) => {
   showSelectedProduct.value = true
 }
 
+const showSelectedTrk = ref(false)
 const selectedTrk = ref<Trk | null>(null)
 const toggleTrk = (trk: Trk) => {
   if (selectedTrk.value === null) selectedTrk.value = trk
   else if (selectedTrk.value.id_trk !== trk.id_trk) selectedTrk.value = trk
   else selectedTrk.value = null
-}
-const getProductByTank = (tank: Tank): Product => {
-  const product = products.value.find((p) => p.id_tovar === tank?.id_tovar)!
-  return product
-}
-const getProductByPist = (pist: Pist): Product => {
-  const tank = tanks.value.find((t) => t.id_tank === pist.id_tank)!
-  return getProductByTank(tank)
+  showSelectedTrk.value = true
 }
 
-const visibleTanks = computed(() => {
-  if (selectedTrk.value === null) return tanks.value
-  const requiredTankIds = selectedTrk.value.pists.map((p) => p.id_tank)
-  const requiredTanks: Tank[] = []
-  requiredTankIds.forEach((tankId) => {
-    const tank = tanks.value.find((t) => t.id_tank === tankId)!
-    requiredTanks.push(tank)
-  })
-  return requiredTanks
-})
+const tankOptions = computed<SelectOption[]>(() =>
+  tanks.value.map<SelectOption>((tank) => ({
+    label: tank.id_tank.toString(),
+    value: tank.id_tank,
+  })),
+)
+
+const getProductByTank = (tank: Tank): Product => {
+  return products.value.find((p) => p.id_tovar === tank?.id_tovar)!
+}
+const getTankByPist = (pist: Pist): Tank => {
+  return tanks.value.find((t) => t.id_tank === pist.id_tank)!
+}
+const getProductByPist = (pist: Pist): Product => {
+  const tank = getTankByPist(pist)
+  return getProductByTank(tank)
+}
 
 onMounted(async () => {
   const data = await getAllSettings()
