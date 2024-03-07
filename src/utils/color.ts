@@ -1,5 +1,3 @@
-/* eslint-disable no-bitwise */
-
 interface RGB {
   r: number
   g: number

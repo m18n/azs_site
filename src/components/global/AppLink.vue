@@ -1,5 +1,10 @@
 <template>
-  <a v-bind="$attrs" class="cursor-pointer" :href="href" @click.prevent="handleClick">
+  <a
+    v-bind="$attrs"
+    class="cursor-pointer"
+    :href="href"
+    @click.prevent="handleClick"
+  >
     <slot />
   </a>
 </template>

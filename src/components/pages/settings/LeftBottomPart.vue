@@ -1,10 +1,25 @@
 <template>
   <div class="flex flex-col py-3 px-5 box-border">
-    <div class="grow text-lg font-bold" @click="selectSection('levelMeter')">{{ sections.levelMeter }}</div>
+    <div
+      class="grow text-lg font-bold"
+      @click="selectSection('levelMeter')"
+    >
+      {{ sections.levelMeter }}
+    </div>
 
-    <div class="grow text-lg font-bold" @click="selectSection('cashDesk')">{{ sections.cashDesk }}</div>
+    <div
+      class="grow text-lg font-bold"
+      @click="selectSection('cashDesk')"
+    >
+      {{ sections.cashDesk }}
+    </div>
 
-    <div class="grow text-lg font-bold" @click="selectSection('adjustment')">{{ sections.adjustment }}</div>
+    <div
+      class="grow text-lg font-bold"
+      @click="selectSection('adjustment')"
+    >
+      {{ sections.adjustment }}
+    </div>
 
     <n-modal
       v-if="selectedSection !== ''"
@@ -19,8 +34,16 @@
     </n-modal>
 
     <div class="shrink">
-      <AppLink external path="/old/main/settings">
-        <n-button size="large" type="warning">Вихід</n-button>
+      <AppLink
+        external
+        path="/old/main/settings"
+      >
+        <n-button
+          size="large"
+          type="warning"
+        >
+          Вихід
+        </n-button>
       </AppLink>
     </div>
   </div>

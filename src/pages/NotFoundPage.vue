@@ -1,7 +1,12 @@
 <template>
   <main>
     <h1>Page not found</h1>
-    <AppLink name="settings" :params="null"><p>Go to the main page</p></AppLink>
+    <AppLink
+      name="settings"
+      :params="null"
+    >
+      <p>Go to the main page</p>
+    </AppLink>
   </main>
 </template>
 

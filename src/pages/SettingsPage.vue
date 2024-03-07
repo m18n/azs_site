@@ -1,13 +1,26 @@
 <template>
   <main class="px-3">
-    <n-grid x-gap="12" :cols="3">
+    <n-grid
+      x-gap="12"
+      :cols="3"
+    >
       <n-grid-item class="max-h-[100dvh] overflow-auto">
-        <n-list hoverable clickable class="h-1/2 overflow-auto">
+        <n-list
+          hoverable
+          clickable
+          class="h-1/2 overflow-auto"
+        >
           <template #header>
-            <div class="text-lg font-bold">Види палива</div>
+            <div class="text-lg font-bold">
+              Види палива
+            </div>
           </template>
 
-          <n-list-item v-for="(product, ind) in products" :key="product.id_tovar" @click="showProduct(product)">
+          <n-list-item
+            v-for="(product, ind) in products"
+            :key="product.id_tovar"
+            @click="showProduct(product)"
+          >
             <n-thing :title="`${ind + 1}. ${product.name_p}`" />
           </n-list-item>
         </n-list>
@@ -21,7 +34,10 @@
           :bordered="false"
           size="huge"
         >
-          <ProductEditForm :product="selectedProduct" @update="saveSelectedProduct" />
+          <ProductEditForm
+            :product="selectedProduct"
+            @update="saveSelectedProduct"
+          />
         </n-modal>
 
         <LeftBottomPart class="h-1/2" />
@@ -30,14 +46,22 @@
       <n-grid-item class="max-h-[100dvh] overflow-auto">
         <n-list>
           <template #header>
-            <div class="text-lg font-bold">Резервуари</div>
+            <div class="text-lg font-bold">
+              Резервуари
+            </div>
           </template>
 
-          <n-list-item v-for="tank in tanks" :key="tank.id_tank">
+          <n-list-item
+            v-for="tank in tanks"
+            :key="tank.id_tank"
+          >
             <n-thing>
               <template #header>
                 {{ tank.id_tank }}.
-                <ProductTitle :product="getProductByTank(tank)" uncolored></ProductTitle>
+                <ProductTitle
+                  :product="getProductByTank(tank)"
+                  uncolored
+                />
               </template>
             </n-thing>
           </n-list-item>
@@ -45,12 +69,21 @@
       </n-grid-item>
 
       <n-grid-item class="max-h-[100dvh] overflow-auto">
-        <n-list hoverable clickable>
+        <n-list
+          hoverable
+          clickable
+        >
           <template #header>
-            <div class="text-lg font-bold">Колонки</div>
+            <div class="text-lg font-bold">
+              Колонки
+            </div>
           </template>
 
-          <n-list-item v-for="trk in trks" :key="trk.id_trk" @click="toggleTrk(trk)">
+          <n-list-item
+            v-for="trk in trks"
+            :key="trk.id_trk"
+            @click="toggleTrk(trk)"
+          >
             <n-thing :title="`TRK ${trk.id_trk}`" />
           </n-list-item>
         </n-list>
@@ -65,12 +98,25 @@
           size="huge"
         >
           <n-thing>
-            <div v-for="pist in selectedTrk.pists" :key="pist.id_pist" class="flex items-center gap-3 mb-2 last:mb-0">
+            <div
+              v-for="pist in selectedTrk.pists"
+              :key="pist.id_pist"
+              class="flex items-center gap-3 mb-2 last:mb-0"
+            >
               Пістолет {{ pist.id_pist }}:
               <span class="ml-3">Резервуар</span>
-              <n-select v-model:value="pist.id_tank" :options="tankOptions" class="w-20" @update:value="changeTankOfSelectedPist" />
+              <n-select
+                v-model:value="pist.id_tank"
+                :options="tankOptions"
+                class="w-20"
+                @update:value="changeTankOfSelectedPist"
+              />
               ->
-              <ProductTitle class="font-bold cursor-pointer" :product="getProductByPist(pist)" @click.stop="showProduct(getProductByPist(pist))" />
+              <ProductTitle
+                class="font-bold cursor-pointer"
+                :product="getProductByPist(pist)"
+                @click.stop="showProduct(getProductByPist(pist))"
+              />
             </div>
           </n-thing>
         </n-modal>

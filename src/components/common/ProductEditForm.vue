@@ -1,5 +1,9 @@
 <template>
-  <FormKit type="form" v-model="copiedProduct" @submit="(p) => $emit('update', p)">
+  <FormKit
+    v-model="copiedProduct"
+    type="form"
+    @submit="(p) => $emit('update', p)"
+  >
     <div class="h-md:hidden">
       <FormKitSchema :schema="productSchema" />
     </div>
