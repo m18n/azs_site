@@ -63,13 +63,13 @@
           size="huge"
         >
           <n-thing>
-            <template #description>
-              <div v-for="pist in selectedTrk.pists" :key="pist.id_pist" class="flex items-center gap-3 mb-2 last:mb-0">
-                <n-select v-model:value="pist.id_tank" :options="tankOptions" class="w-20" />
-                ->
-                <ProductTitle class="font-bold cursor-pointer" :product="getProductByPist(pist)" @click.stop="showProduct(getProductByPist(pist))" />
-              </div>
-            </template>
+            <div v-for="pist in selectedTrk.pists" :key="pist.id_pist" class="flex items-center gap-3 mb-2 last:mb-0">
+              Пістолет {{ pist.id_pist }}:
+              <span class="ml-3">Резервуар</span>
+              <n-select v-model:value="pist.id_tank" :options="tankOptions" class="w-20" @update:value="changeTankOfSelectedPist" />
+              ->
+              <ProductTitle class="font-bold cursor-pointer" :product="getProductByPist(pist)" @click.stop="showProduct(getProductByPist(pist))" />
+            </div>
           </n-thing>
         </n-modal>
       </n-grid-item>
@@ -128,6 +128,13 @@ const tankOptions = computed<SelectOption[]>(() =>
     value: tank.id_tank,
   })),
 )
+const changeTankOfSelectedPist = async () => {
+  if (!selectedTrk.value) throw new Error("NOT POSSIBLE")
+
+  await setAllSettings({
+    trks: [selectedTrk.value],
+  })
+}
 
 const getProductByTank = (tank: Tank): Product => {
   return products.value.find((p) => p.id_tovar === tank?.id_tovar)!
