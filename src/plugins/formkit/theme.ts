@@ -212,6 +212,7 @@ const classes: Record<string, Record<string, boolean>> = {
     "w-full": true,
     "py-2": true,
     "px-3": true,
+    "box-border": true,
     rounded: true,
     border: true,
     "border-neutral-400": true,

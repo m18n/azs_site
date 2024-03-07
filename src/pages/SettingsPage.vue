@@ -1,8 +1,8 @@
 <template>
   <main class="px-3">
     <n-grid x-gap="12" :cols="3">
-      <n-grid-item class="max-h-[50dvh] overflow-auto">
-        <n-list hoverable clickable>
+      <n-grid-item class="max-h-[100dvh] overflow-auto">
+        <n-list hoverable clickable class="h-1/2 overflow-auto">
           <template #header>
             <div class="text-lg font-bold">Види палива</div>
           </template>
@@ -16,16 +16,18 @@
           v-if="selectedProduct"
           v-model:show="showSelectedProduct"
           preset="card"
-          :style="{ width: '600px' }"
+          class="w-[600px] h-md:w-[800px]"
           :title="selectedProduct.name_p_f"
           :bordered="false"
           size="huge"
         >
           <ProductEditForm :product="selectedProduct" @update="saveSelectedProduct" />
         </n-modal>
+
+        <LeftBottomPart class="h-1/2" />
       </n-grid-item>
 
-      <n-grid-item class="max-h-[50dvh] overflow-auto">
+      <n-grid-item class="max-h-[100dvh] overflow-auto">
         <n-list>
           <template #header>
             <div class="text-lg font-bold">Резервуари</div>
@@ -42,7 +44,7 @@
         </n-list>
       </n-grid-item>
 
-      <n-grid-item class="max-h-[50dvh] overflow-auto">
+      <n-grid-item class="max-h-[100dvh] overflow-auto">
         <n-list hoverable clickable>
           <template #header>
             <div class="text-lg font-bold">Колонки</div>
@@ -88,6 +90,8 @@ import type { Pist, Trk } from "@/models/Trk"
 
 import ProductTitle from "@/components/common/ProductTitle.vue"
 import ProductEditForm from "@/components/common/ProductEditForm.vue"
+
+import LeftBottomPart from "@/components/pages/settings/LeftBottomPart.vue"
 
 import { getAllSettings } from "@/services/api/settings/get-all"
 import { setAllSettings } from "@/services/api/settings/set-all"
