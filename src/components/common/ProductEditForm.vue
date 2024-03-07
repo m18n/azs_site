@@ -2,7 +2,6 @@
   <FormKit type="form" v-model="copiedProduct" @submit="(p) => $emit('update', p)">
     <FormKitSchema :schema="productSchema" />
   </FormKit>
-  <pre>{{ copiedProduct }}</pre>
 </template>
 
 <script setup lang="ts">
@@ -58,6 +57,8 @@ const productSchema: FormKitSchemaNode[] = [
   },
   {
     $formkit: "number",
+    number: "float",
+    step: 0.01,
     name: "price",
     label: "Ціна",
     validation: "required",

@@ -96,14 +96,6 @@ const tanks = ref<Tank[]>([])
 const products = ref<Product[]>([])
 const trks = ref<Trk[]>([])
 
-const saveChangedData = async () => {
-  await setAllSettings({
-    tanks: tanks.value,
-    trks: trks.value,
-    tovars: products.value,
-  })
-}
-
 const showSelectedProduct = ref(false)
 const selectedProduct = ref<Product | null>(null)
 const showProduct = (product: Product) => {
@@ -111,11 +103,14 @@ const showProduct = (product: Product) => {
   showSelectedProduct.value = true
 }
 const saveSelectedProduct = async (product: Product) => {
-  const productIndex = products.value.findIndex((p) => p.id_tovar === product.id_tovar)
-  selectedProduct.value = product
-  products.value[productIndex] = product
+  await setAllSettings({
+    tovars: [product],
+  })
 
-  await saveChangedData()
+  selectedProduct.value = product
+
+  const productIndex = products.value.findIndex((p) => p.id_tovar === product.id_tovar)
+  products.value[productIndex] = product
 }
 
 const showSelectedTrk = ref(false)
