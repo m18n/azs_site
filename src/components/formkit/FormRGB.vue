@@ -13,6 +13,7 @@ import { computed } from "vue"
 import { getColorHash, getColorRGB } from "@/utils/color"
 
 const props = defineProps({
+  // eslint-disable-next-line vue/require-default-prop
   context: Object,
 })
 

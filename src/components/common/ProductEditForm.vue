@@ -26,7 +26,7 @@ import type { Product } from "@/models/Product"
 const props = defineProps<{
   product: Product
 }>()
-const emit = defineEmits<{
+defineEmits<{
   update: [product: Product]
 }>()
 

@@ -16,7 +16,5 @@ const props = defineProps<{
   uncolored?: boolean
 }>()
 
-const emit = defineEmits<{}>()
-
 const color = computed(() => (props.uncolored ? "black" : getColorHash(props.product.color)))
 </script>
