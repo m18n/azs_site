@@ -1,10 +1,5 @@
 <template>
-  <a
-    v-bind="$attrs"
-    class="cursor-pointer underline underline-offset-2 hover:text-primary-strong"
-    :href="resolvedRoute.href"
-    @click.prevent="handleClick"
-  >
+  <a v-bind="$attrs" class="cursor-pointer" :href="href" @click.prevent="handleClick">
     <slot />
   </a>
 </template>
@@ -18,11 +13,12 @@ import { isNotEmptyString } from "@/utils/string"
 import { useRouter } from "vue-router"
 
 const props = defineProps<{
-  name: N
-  params: AppRouteOptions[N] extends { params: any } ? AppRouteOptions[N]["params"] : null
+  name?: N
+  params?: AppRouteOptions[N] extends { params: any } ? AppRouteOptions[N]["params"] : null
   query?: AppRouteOptions[N] extends { query: any } ? AppRouteOptions[N]["query"] : null
-  href?: string
+  path?: string
   blank?: boolean
+  external?: boolean
   prevent?: boolean
 }>()
 
@@ -35,15 +31,17 @@ const router = useRouter()
 const resolvedRoute = computed(() =>
   router.resolve({
     name: props.name,
-    path: props.href,
     params: props.params ?? undefined,
     query: props.query ?? undefined,
   }),
 )
 
+const href = computed(() => props.path ?? resolvedRoute.value.href)
+
 const handleClick = async (event: MouseEvent): Promise<void> => {
-  if (isNotEmptyString(props.href)) {
-    router.push({ path: props.href })
+  if (isNotEmptyString(props.path)) {
+    if (!props.external) router.push({ path: props.path })
+    else window.location.href = resolvedRoute.value.fullPath
     return
   }
 
