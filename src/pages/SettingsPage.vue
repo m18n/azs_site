@@ -47,7 +47,10 @@
       </n-grid-item>
 
       <n-grid-item class="h-full overflow-auto">
-        <n-list>
+        <n-list
+          hoverable
+          clickable
+        >
           <template #header>
             <div class="text-lg font-bold">
               Резервуари
@@ -57,6 +60,7 @@
           <n-list-item
             v-for="tank in tanks"
             :key="tank.id_tank"
+            @click="showTank(tank)"
           >
             <n-thing>
               <template #header>
@@ -69,6 +73,22 @@
             </n-thing>
           </n-list-item>
         </n-list>
+
+        <n-modal
+          v-if="selectedTank"
+          v-model:show="showSelectedTank"
+          preset="card"
+          :title="`Резервуар ${selectedTank.id_tank}`"
+          class="w-[600px]"
+          :bordered="false"
+          size="huge"
+        >
+          <TankEditForm
+            :tank="selectedTank"
+            :products="products"
+            @update="saveSelectedTank"
+          />
+        </n-modal>
       </n-grid-item>
 
       <n-grid-item class="h-full overflow-auto">
@@ -139,6 +159,7 @@ import type { Pist, Trk } from "@/models/Trk"
 
 import ProductTitle from "@/components/common/ProductTitle.vue"
 import ProductEditForm from "@/components/common/ProductEditForm.vue"
+import TankEditForm from "@/components/common/TankEditForm.vue"
 
 import LeftBottomPart from "@/components/pages/settings/LeftBottomPart.vue"
 
@@ -187,6 +208,23 @@ const changeTankOfSelectedPist = async () => {
   await setAllSettings({
     trks: [selectedTrk.value],
   })
+}
+
+const showSelectedTank = ref(false)
+const selectedTank = ref<Tank | null>(null)
+const showTank = (tank: Tank) => {
+  selectedTank.value = tank
+  showSelectedTank.value = true
+}
+const saveSelectedTank = async (tank: Tank) => {
+  await setAllSettings({
+    tanks: [tank],
+  })
+
+  selectedTank.value = tank
+
+  const tankIndex = tanks.value.findIndex((t) => t.id_tank === tank.id_tank)
+  tanks.value[tankIndex] = tank
 }
 
 const getProductByTank = (tank: Tank): Product => {
