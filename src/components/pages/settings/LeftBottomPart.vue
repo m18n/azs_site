@@ -1,32 +1,22 @@
 <template>
-  <div class="flex flex-col py-3 px-5 box-border">
-    <div
-      class="grow text-lg font-bold"
-      @click="selectSection('levelMeter')"
+  <div class="box-content flex flex-col gap-2 px-5 py-3">
+    <n-button
+      v-for="[key, section] in Object.entries(sections)"
+      :key="key"
+      size="large"
+      :type="section.buttonColor"
+      class="w-2/3 py-8 text-lg !font-bold h-md:py-7"
+      @click="selectSection(key)"
     >
-      {{ sections.levelMeter }}
-    </div>
-
-    <div
-      class="grow text-lg font-bold"
-      @click="selectSection('cashDesk')"
-    >
-      {{ sections.cashDesk }}
-    </div>
-
-    <div
-      class="grow text-lg font-bold"
-      @click="selectSection('adjustment')"
-    >
-      {{ sections.adjustment }}
-    </div>
+      {{ section.text }}
+    </n-button>
 
     <n-modal
       v-if="selectedSection !== ''"
       v-model:show="showModal"
       preset="card"
       class="w-[600px]"
-      :title="sections[selectedSection]"
+      :title="sections[selectedSection].text"
       :bordered="false"
       size="huge"
     >
@@ -40,7 +30,8 @@
       >
         <n-button
           size="large"
-          type="warning"
+          type="error"
+          class="w-2/3 py-8 text-lg !font-bold h-md:py-7"
         >
           Вихід
         </n-button>
@@ -57,11 +48,11 @@ import { ref } from "vue"
 
 type Section = "levelMeter" | "cashDesk" | "adjustment"
 
-const sections: Record<Section, string> = {
-  levelMeter: "Рівномір",
-  cashDesk: "Каса",
-  adjustment: "Юстирування",
-}
+const sections = {
+  levelMeter: { text: "Рівномір", buttonColor: "info" },
+  cashDesk: { text: "Каса", buttonColor: "success" },
+  adjustment: { text: "Юстирування", buttonColor: "warning" },
+} as const
 
 const selectedSection = ref<Section | "">("")
 const showModal = ref(false)

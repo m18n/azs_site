@@ -3,47 +3,50 @@
     <n-grid
       x-gap="12"
       :cols="3"
+      class="h-[100dvh]"
     >
-      <n-grid-item class="max-h-[100dvh] overflow-auto">
-        <n-list
-          hoverable
-          clickable
-          class="h-1/2 overflow-auto"
-        >
-          <template #header>
-            <div class="text-lg font-bold">
-              Види палива
-            </div>
-          </template>
-
-          <n-list-item
-            v-for="(product, ind) in products"
-            :key="product.id_tovar"
-            @click="showProduct(product)"
+      <n-grid-item class="h-full overflow-auto">
+        <div class="flex h-full flex-col">
+          <n-list
+            hoverable
+            clickable
+            class="grow overflow-auto"
           >
-            <n-thing :title="`${ind + 1}. ${product.name_p}`" />
-          </n-list-item>
-        </n-list>
+            <template #header>
+              <div class="text-lg font-bold">
+                Види палива
+              </div>
+            </template>
 
-        <n-modal
-          v-if="selectedProduct"
-          v-model:show="showSelectedProduct"
-          preset="card"
-          class="w-[600px] h-md:w-[800px]"
-          :title="selectedProduct.name_p_f"
-          :bordered="false"
-          size="huge"
-        >
-          <ProductEditForm
-            :product="selectedProduct"
-            @update="saveSelectedProduct"
-          />
-        </n-modal>
+            <n-list-item
+              v-for="(product, ind) in products"
+              :key="product.id_tovar"
+              @click="showProduct(product)"
+            >
+              <n-thing :title="`${ind + 1}. ${product.name_p}`" />
+            </n-list-item>
+          </n-list>
 
-        <LeftBottomPart class="h-1/2" />
+          <n-modal
+            v-if="selectedProduct"
+            v-model:show="showSelectedProduct"
+            preset="card"
+            class="w-[600px] h-md:w-[800px]"
+            :title="selectedProduct.name_p_f"
+            :bordered="false"
+            size="huge"
+          >
+            <ProductEditForm
+              :product="selectedProduct"
+              @update="saveSelectedProduct"
+            />
+          </n-modal>
+
+          <LeftBottomPart />
+        </div>
       </n-grid-item>
 
-      <n-grid-item class="max-h-[100dvh] overflow-auto">
+      <n-grid-item class="h-full overflow-auto">
         <n-list>
           <template #header>
             <div class="text-lg font-bold">
@@ -68,7 +71,7 @@
         </n-list>
       </n-grid-item>
 
-      <n-grid-item class="max-h-[100dvh] overflow-auto">
+      <n-grid-item class="h-full overflow-auto">
         <n-list
           hoverable
           clickable
@@ -101,7 +104,7 @@
             <div
               v-for="pist in selectedTrk.pists"
               :key="pist.id_pist"
-              class="flex items-center gap-3 mb-2 last:mb-0"
+              class="mb-2 flex items-center gap-3 last:mb-0"
             >
               Пістолет {{ pist.id_pist }}:
               <span class="ml-3">Резервуар</span>
@@ -113,7 +116,7 @@
               />
               ->
               <ProductTitle
-                class="font-bold cursor-pointer"
+                class="cursor-pointer font-bold"
                 :product="getProductByPist(pist)"
                 @click.stop="showProduct(getProductByPist(pist))"
               />
