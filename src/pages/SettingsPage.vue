@@ -85,7 +85,6 @@
         >
           <TankEditForm
             :tank="selectedTank"
-            :products="products"
             @update="saveSelectedTank"
           />
         </n-modal>
@@ -120,28 +119,11 @@
           :bordered="false"
           size="huge"
         >
-          <n-thing>
-            <div
-              v-for="pist in selectedTrk.pists"
-              :key="pist.id_pist"
-              class="mb-2 flex items-center gap-3 last:mb-0"
-            >
-              Пістолет {{ pist.id_pist }}:
-              <span class="ml-3">Резервуар</span>
-              <n-select
-                v-model:value="pist.id_tank"
-                :options="tankOptions"
-                class="w-20"
-                @update:value="changeTankOfSelectedPist"
-              />
-              ->
-              <ProductTitle
-                class="cursor-pointer font-bold"
-                :product="getProductByPist(pist)"
-                @click.stop="showProduct(getProductByPist(pist))"
-              />
-            </div>
-          </n-thing>
+          <TrkEditForm
+            :trk="selectedTrk"
+            @update="changeTankOfSelectedPist"
+            @show-product="showProduct"
+          />
         </n-modal>
       </n-grid-item>
     </n-grid>
@@ -149,26 +131,24 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue"
+import { onMounted, ref } from "vue"
 
-import { NList, NListItem, NThing, NGrid, NGridItem, NModal, NSelect, type SelectOption } from "naive-ui"
+import { NList, NListItem, NThing, NGrid, NGridItem, NModal } from "naive-ui"
 
 import type { Tank } from "@/models/Tank"
 import type { Product } from "@/models/Product"
-import type { Pist, Trk } from "@/models/Trk"
+import type { Trk } from "@/models/Trk"
 
 import ProductTitle from "@/components/common/ProductTitle.vue"
 import ProductEditForm from "@/components/common/ProductEditForm.vue"
 import TankEditForm from "@/components/common/TankEditForm.vue"
+import TrkEditForm from "@/components/common/TrkEditForm.vue"
 
 import LeftBottomPart from "@/components/pages/settings/LeftBottomPart.vue"
 
-import { getAllSettings } from "@/services/api/settings/get-all"
 import { setAllSettings } from "@/services/api/settings/set-all"
 
-const tanks = ref<Tank[]>([])
-const products = ref<Product[]>([])
-const trks = ref<Trk[]>([])
+import { products, tanks, trks, getProductByTank, fetchSettingsData } from "@/store/settings"
 
 const showSelectedProduct = ref(false)
 const selectedProduct = ref<Product | null>(null)
@@ -196,17 +176,9 @@ const toggleTrk = (trk: Trk) => {
   showSelectedTrk.value = true
 }
 
-const tankOptions = computed<SelectOption[]>(() =>
-  tanks.value.map<SelectOption>((tank) => ({
-    label: tank.id_tank.toString(),
-    value: tank.id_tank,
-  })),
-)
-const changeTankOfSelectedPist = async () => {
-  if (!selectedTrk.value) throw new Error("NOT POSSIBLE")
-
+const changeTankOfSelectedPist = async (trk: Trk) => {
   await setAllSettings({
-    trks: [selectedTrk.value],
+    trks: [trk],
   })
 }
 
@@ -227,22 +199,7 @@ const saveSelectedTank = async (tank: Tank) => {
   tanks.value[tankIndex] = tank
 }
 
-const getProductByTank = (tank: Tank): Product => {
-  return products.value.find((p) => p.id_tovar === tank?.id_tovar)!
-}
-const getTankByPist = (pist: Pist): Tank => {
-  return tanks.value.find((t) => t.id_tank === pist.id_tank)!
-}
-const getProductByPist = (pist: Pist): Product => {
-  const tank = getTankByPist(pist)
-  return getProductByTank(tank)
-}
-
 onMounted(async () => {
-  const data = await getAllSettings()
-
-  tanks.value = data.tanks
-  products.value = data.tovars
-  trks.value = data.trks
+  await fetchSettingsData()
 })
 </script>

@@ -16,11 +16,11 @@ import { FormKitSchema } from "@formkit/vue"
 import type { FormKitSchemaNode, FormKitFrameworkContext } from "@formkit/core"
 
 import type { Tank } from "@/models/Tank"
-import type { Product } from "@/models/Product"
+
+import { products } from "@/store/settings"
 
 const props = defineProps<{
   tank: Tank
-  products: Product[]
 }>()
 defineEmits<{
   update: [tank: Tank]
@@ -29,7 +29,7 @@ defineEmits<{
 const copiedTank = reactive(cloneDeep(props.tank))
 
 const productOptions = computed<FormKitFrameworkContext["options"]>(() =>
-  props.products.map((product) => ({
+  products.value.map((product) => ({
     label: product.name_p,
     value: product.id_tovar,
   })),
