@@ -14,6 +14,7 @@
     "@formkit/i18n": "^1.5.9",
     "@formkit/vue": "^1.5.9",
     "clone-deep": "^4.0.1",
+    "date-fns": "^3.3.1",
     "naive-ui": "^2.38.1",
     "vue": "^3.4.19",
     "vue-router": "^4.3.0"

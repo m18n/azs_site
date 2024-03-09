@@ -14,6 +14,9 @@ dependencies:
   clone-deep:
     specifier: ^4.0.1
     version: 4.0.1
+  date-fns:
+    specifier: ^3.3.1
+    version: 3.3.1
   naive-ui:
     specifier: ^2.38.1
     version: 2.38.1(vue@3.4.20)
@@ -1227,6 +1230,10 @@ packages:
     engines: { node: ">=0.11" }
     dependencies:
       "@babel/runtime": 7.24.0
+    dev: false
+
+  /date-fns@3.3.1:
+    resolution: { integrity: sha512-y8e109LYGgoQDveiEBD3DYXKba1jWf5BA8YU1FL5Tvm0BTdEfy54WLCwnuYWZNnzzvALy/QQ4Hov+Q9RVRv+Zw== }
     dev: false
 
   /de-indent@1.0.2:

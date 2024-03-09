@@ -1,10 +1,12 @@
+import { parseJSON } from "@/utils/parse"
+
 const baseURL = import.meta.env.VITE_BASE_URL ?? ""
 
 const api = {
   async get<T>(url: string): Promise<T> {
     const response = await fetch(`${baseURL}/api${url}`)
     const data = await response.json()
-    return data as T
+    return parseJSON(data) as T
   },
   async post<T, D>(url: string, data: D): Promise<T> {
     const headers = new Headers()
@@ -16,7 +18,7 @@ const api = {
       headers,
     })
     const responseData = await response.json()
-    return responseData as T
+    return parseJSON(responseData) as T
   },
 }
 
