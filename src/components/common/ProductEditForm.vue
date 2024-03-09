@@ -7,7 +7,7 @@
     <div class="h-md:hidden">
       <FormKitSchema :schema="productSchema" />
     </div>
-    <div class="hidden h-md:grid h-md:grid-cols-2 gap-8">
+    <div class="hidden h-md:grid h-md:grid-cols-2 h-md:gap-8">
       <FormKitSchema :schema="productSchema.slice(0, 3)" />
       <FormKitSchema :schema="productSchema.slice(3)" />
     </div>

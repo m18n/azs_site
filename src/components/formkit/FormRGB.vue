@@ -2,7 +2,7 @@
   <input
     type="color"
     :value="hash"
-    class="appearance-none [color-scheme:light] dark:[color-scheme:dark] selection:text-neutral-700 group-data-[has-overlay]:selection:!text-transparent text-base text-neutral-700 min-w-0 min-h-[1.5em] grow outline-none bg-transparent selection:bg-blue-100 placeholder:text-neutral-400 group-data-[disabled]:!cursor-not-allowed dark:placeholder-neutral-400/50 dark:text-neutral-300 border-none p-0 focus:ring-0 !w-14 cursor-pointer rounded overflow-clip [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-none [&::-moz-color-swatch]:border-none group-data-[prefix-icon]:mx-2 group-data-[suffix-icon]:mx-2 formkit-input"
+    class="formkit-input min-h-[1.5em] !w-14 min-w-0 grow cursor-pointer appearance-none text-clip rounded border-none bg-transparent p-0 text-base text-neutral-700 outline-none [color-scheme:light] selection:bg-blue-100 selection:text-neutral-700 placeholder:text-neutral-400 focus:ring-0 group-data-[prefix-icon]:mx-2 group-data-[suffix-icon]:mx-2 group-data-[disabled]:!cursor-not-allowed group-data-[has-overlay]:selection:!text-transparent dark:text-neutral-300 dark:[color-scheme:dark] dark:placeholder:text-neutral-400/50 [&::-moz-color-swatch]:border-none [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-none"
     @input="handleInput"
   >
 </template>
