@@ -6,11 +6,20 @@ module.exports = {
     parser: "@typescript-eslint/parser",
     sourceType: "module",
   },
-  extends: ["eslint:recommended", "plugin:vue/vue3-recommended", "plugin:@typescript-eslint/recommended"],
+  extends: ["eslint:recommended", "plugin:vue/vue3-recommended", "plugin:@typescript-eslint/recommended", "plugin:tailwindcss/recommended"],
   rules: {
     "no-unused-vars": "off",
     "no-undef": "off",
+
     "@typescript-eslint/no-explicit-any": "off",
+
+    "tailwindcss/no-custom-classname": [
+      "error",
+      {
+        whitelist: ["formkit-.+"],
+      },
+    ],
+
     "no-restricted-syntax": [
       "error",
       {
