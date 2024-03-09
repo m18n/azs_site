@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@formkit/core": "^1.5.9",
+    "@total-typescript/ts-reset": "^0.5.1",
     "@types/clone-deep": "^4.0.4",
     "@types/node": "^20.11.20",
     "@typescript-eslint/eslint-plugin": "^6.21.0",

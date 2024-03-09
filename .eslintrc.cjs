@@ -1,6 +1,6 @@
 module.exports = {
   reportUnusedDisableDirectives: true,
-  ignorePatterns: ["public/public/old/*"],
+  ignorePatterns: ["public/public/old/*", "pnpm-lock.yaml"],
   parser: "vue-eslint-parser",
   parserOptions: {
     parser: "@typescript-eslint/parser",

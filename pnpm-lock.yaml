@@ -28,6 +28,9 @@ devDependencies:
   "@formkit/core":
     specifier: ^1.5.9
     version: 1.5.9
+  "@total-typescript/ts-reset":
+    specifier: ^0.5.1
+    version: 0.5.1
   "@types/clone-deep":
     specifier: ^4.0.4
     version: 4.0.4
@@ -662,6 +665,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@total-typescript/ts-reset@0.5.1:
+    resolution: { integrity: sha512-AqlrT8YA1o7Ff5wPfMOL0pvL+1X+sw60NN6CcOCqs658emD6RfiXhF7Gu9QcfKBH7ELY2nInLhKSCWVoNL70MQ== }
+    dev: true
 
   /@types/clone-deep@4.0.4:
     resolution: { integrity: sha512-vXh6JuuaAha6sqEbJueYdh5zNBPPgG1OYumuz2UvLvriN6ABHDSW8ludREGWJb1MLIzbwZn4q4zUbUCerJTJfA== }
