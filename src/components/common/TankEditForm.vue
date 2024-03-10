@@ -29,8 +29,8 @@ defineEmits<{
 const copiedTank = reactive(cloneDeep(props.tank))
 
 const productOptions = computed<FormKitFrameworkContext["options"]>(() =>
-  products.value.map((product) => ({
-    label: product.name_p,
+  products.value.map((product, index) => ({
+    label: `${index + 1}. ${product.name_p}`,
     value: product.id_tovar,
   })),
 )
