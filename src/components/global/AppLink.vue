@@ -46,7 +46,7 @@ const href = computed(() => props.path ?? resolvedRoute.value.href)
 const handleClick = async (event: MouseEvent): Promise<void> => {
   if (isNotEmptyString(props.path)) {
     if (!props.external) router.push({ path: props.path })
-    else window.location.href = resolvedRoute.value.fullPath
+    else window.location.href = props.path
     return
   }
 
