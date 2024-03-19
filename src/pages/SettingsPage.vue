@@ -121,7 +121,7 @@
         >
           <TrkEditForm
             :trk="selectedTrk"
-            @update="changeTankOfSelectedPist"
+            @update="updateTrk"
             @show-product="showProduct"
           />
         </n-modal>
@@ -137,7 +137,7 @@ import { NList, NListItem, NThing, NGrid, NGridItem, NModal } from "naive-ui"
 
 import type { Tank } from "@/models/Tank"
 import type { Product } from "@/models/Product"
-import type { Trk } from "@/models/Trk"
+import type { Pist, Trk } from "@/models/Trk"
 
 import ProductTitle from "@/components/common/ProductTitle.vue"
 import ProductEditForm from "@/components/common/ProductEditForm.vue"
@@ -176,10 +176,12 @@ const toggleTrk = (trk: Trk) => {
   showSelectedTrk.value = true
 }
 
-const changeTankOfSelectedPist = async (trk: Trk) => {
+const updateTrk = async ({ trk, pists }: { trk: Trk; pists: Pist[] }) => {
   await setAllSettings({
     trks: [trk],
   })
+
+  console.log("🚀 ~ delete ~ pists:", pists)
 }
 
 const showSelectedTank = ref(false)
