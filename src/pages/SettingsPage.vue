@@ -144,11 +144,14 @@ import ProductEditForm from "@/components/common/ProductEditForm.vue"
 import TankEditForm from "@/components/common/TankEditForm.vue"
 import TrkEditForm from "@/components/common/TrkEditForm.vue"
 
+import { useList } from "@/composables/global/list"
+
 import LeftBottomPart from "@/components/pages/settings/LeftBottomPart.vue"
 
 import { setAllSettings } from "@/services/api/settings/set-all"
 
 import { products, tanks, trks, getProductByTank, fetchSettingsData } from "@/store/settings"
+import { deleteAllSettings } from "@/services/api/settings/delete-all"
 
 const showSelectedProduct = ref(false)
 const selectedProduct = ref<Product | null>(null)
@@ -167,12 +170,11 @@ const saveSelectedProduct = async (product: Product) => {
   products.value[productIndex] = product
 }
 
+const [selectedTrk, { toggle: toggleSelectedTrkId }] = useList(trks, "id_trk")
 const showSelectedTrk = ref(false)
-const selectedTrk = ref<Trk | null>(null)
+
 const toggleTrk = (trk: Trk) => {
-  if (selectedTrk.value === null) selectedTrk.value = trk
-  else if (selectedTrk.value.id_trk !== trk.id_trk) selectedTrk.value = trk
-  else selectedTrk.value = null
+  toggleSelectedTrkId(trk.id_trk)
   showSelectedTrk.value = true
 }
 
@@ -181,7 +183,18 @@ const updateTrk = async ({ trk, pists }: { trk: Trk; pists: Pist[] }) => {
     trks: [trk],
   })
 
-  console.log("🚀 ~ delete ~ pists:", pists)
+  if (pists.length > 0) {
+    await deleteAllSettings({
+      trks: [
+        {
+          id_trk: trk.id_trk,
+          pists: pists.map((p) => ({ id_pist: p.id_pist })),
+        },
+      ],
+    })
+  }
+
+  await fetchSettingsData()
 }
 
 const showSelectedTank = ref(false)

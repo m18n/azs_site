@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue"
+import { computed, ref } from "vue"
 import cloneDeep from "clone-deep"
 
 import { NThing, NSelect, NButton, type SelectOption } from "naive-ui"
@@ -74,6 +74,8 @@ import type { Product } from "@/models/Product"
 import type { Pist, Trk } from "@/models/Trk"
 
 import ProductTitle from "@/components/common/ProductTitle.vue"
+
+import { useReactive } from "@/composables/global/reactive"
 
 import { getProductByPist, tanks } from "@/store/settings"
 
@@ -86,7 +88,7 @@ const emit = defineEmits<{
   "show-product": [product: Product]
 }>()
 
-const copiedTrk = reactive(cloneDeep(props.trk))
+const [copiedTrk] = useReactive(props.trk, { watch: () => props.trk })
 
 const emptyPist: Pist = {
   id_pist: 0,
