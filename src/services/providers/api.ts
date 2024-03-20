@@ -9,13 +9,9 @@ const api = {
     return parseJSON(data) as T
   },
   async post<T, D>(url: string, data: D): Promise<T> {
-    const headers = new Headers()
-    headers.set("Content-Type", "application/json")
-
     const response = await fetch(`${baseURL}/api${url}`, {
       method: "POST",
       body: JSON.stringify(data),
-      headers,
     })
     const responseData = await response.json()
     return parseJSON(responseData) as T
