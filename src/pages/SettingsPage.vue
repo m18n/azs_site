@@ -114,7 +114,7 @@
           v-if="selectedTrk"
           v-model:show="showSelectedTrk"
           preset="card"
-          :style="{ width: '600px' }"
+          class="w-[600px]"
           :title="`TRK ${selectedTrk.id_trk}`"
           :bordered="false"
           size="huge"
@@ -144,7 +144,7 @@ import ProductEditForm from "@/components/common/ProductEditForm.vue"
 import TankEditForm from "@/components/common/TankEditForm.vue"
 import TrkEditForm from "@/components/common/TrkEditForm.vue"
 
-import { useList } from "@/composables/global/list"
+import { useSelectedInList } from "@/composables/global/selected-in-list"
 
 import LeftBottomPart from "@/components/pages/settings/LeftBottomPart.vue"
 
@@ -154,9 +154,9 @@ import { products, tanks, trks, getProductByTank, fetchSettingsData } from "@/st
 import { deleteAllSettings } from "@/services/api/settings/delete-all"
 
 const showSelectedProduct = ref(false)
-const selectedProduct = ref<Product | null>(null)
+const [selectedProduct, { set: setSelectedProductId }] = useSelectedInList(products, "id_tovar")
 const showProduct = (product: Product) => {
-  selectedProduct.value = product
+  setSelectedProductId(product.id_tovar)
   showSelectedProduct.value = true
 }
 const saveSelectedProduct = async (product: Product) => {
@@ -164,13 +164,10 @@ const saveSelectedProduct = async (product: Product) => {
     tovars: [product],
   })
 
-  selectedProduct.value = product
-
-  const productIndex = products.value.findIndex((p) => p.id_tovar === product.id_tovar)
-  products.value[productIndex] = product
+  await fetchSettingsData()
 }
 
-const [selectedTrk, { toggle: toggleSelectedTrkId }] = useList(trks, "id_trk")
+const [selectedTrk, { toggle: toggleSelectedTrkId }] = useSelectedInList(trks, "id_trk")
 const showSelectedTrk = ref(false)
 
 const toggleTrk = (trk: Trk) => {
@@ -198,9 +195,9 @@ const updateTrk = async ({ trk, pists }: { trk: Trk; pists: Pist[] }) => {
 }
 
 const showSelectedTank = ref(false)
-const selectedTank = ref<Tank | null>(null)
+const [selectedTank, { set: setSelectedTankId }] = useSelectedInList(tanks, "id_tank")
 const showTank = (tank: Tank) => {
-  selectedTank.value = tank
+  setSelectedTankId(tank.id_tank)
   showSelectedTank.value = true
 }
 const saveSelectedTank = async (tank: Tank) => {
@@ -208,13 +205,8 @@ const saveSelectedTank = async (tank: Tank) => {
     tanks: [tank],
   })
 
-  selectedTank.value = tank
-
-  const tankIndex = tanks.value.findIndex((t) => t.id_tank === tank.id_tank)
-  tanks.value[tankIndex] = tank
+  await fetchSettingsData()
 }
 
-onMounted(async () => {
-  await fetchSettingsData()
-})
+onMounted(fetchSettingsData)
 </script>

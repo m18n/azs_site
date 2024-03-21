@@ -1,11 +1,11 @@
 import { isObject } from "@/utils/check-runtime-types"
-import { computed, ref, type Ref } from "vue"
+import { computed, type ComputedRef, ref, type Ref } from "vue"
 
-export const useList = <T extends Record<string, any> | string | number>(
+export const useSelectedInList = <T extends Record<string, any> | string | number>(
   list: Ref<T[]>,
   key: T extends Record<string, any> ? keyof T : T,
 ): [
-  Ref<T | null>,
+  ComputedRef<T | null>,
   {
     set: (val: string | number) => void
     toggle: (val: string | number) => void
