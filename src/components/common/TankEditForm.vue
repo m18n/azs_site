@@ -2,6 +2,7 @@
   <FormKit
     v-model="copiedTank"
     type="form"
+    :actions="false"
     @submit="(t) => $emit('update', t)"
   >
     <FormKitSchema :schema="tankSchema" />
@@ -56,6 +57,10 @@ const tankSchema = computed<FormKitSchemaNode[]>(() => [
     name: "remain",
     label: "Мертвий залишок",
     validation: "required",
+  },
+  {
+    $formkit: "submit",
+    label: "Зберегти",
   },
 ])
 </script>

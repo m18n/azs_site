@@ -59,7 +59,7 @@
       class="mt-5"
       @click="updateTrk"
     >
-      Відправити
+      Зберегти
     </n-button>
   </n-thing>
 </template>

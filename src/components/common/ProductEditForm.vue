@@ -2,6 +2,7 @@
   <FormKit
     v-model="copiedProduct"
     type="form"
+    :actions="false"
     @submit="(p) => $emit('update', p)"
   >
     <div class="h-md:hidden">
@@ -72,6 +73,10 @@ const productSchema: FormKitSchemaNode[] = [
     name: "price",
     label: "Ціна",
     validation: "required",
+  },
+  {
+    $formkit: "submit",
+    label: "Зберегти",
   },
 ]
 </script>
