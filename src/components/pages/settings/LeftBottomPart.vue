@@ -26,7 +26,7 @@
     <div class="shrink">
       <AppLink
         external
-        path="/old/main/settings"
+        path="/view/userspace/old/main/settings"
       >
         <n-button
           size="large"

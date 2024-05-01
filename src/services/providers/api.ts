@@ -2,6 +2,9 @@ import { parseJSON } from "@/utils/parse"
 
 const baseURL = import.meta.env.VITE_BASE_URL ?? ""
 
+const headers = new Headers()
+headers.set("Content-Type", "application/json")
+
 const handleFetch = async <T>(fn: () => Promise<Response>): Promise<T> => {
   try {
     const response = await fn()
@@ -15,7 +18,7 @@ const handleFetch = async <T>(fn: () => Promise<Response>): Promise<T> => {
 
 const api = {
   async get<T>(url: string): Promise<T> {
-    const result = await handleFetch<T>(() => fetch(`${baseURL}/api${url}`))
+    const result = await handleFetch<T>(() => fetch(`${baseURL}/api${url}`, { headers }))
     return result
   },
   async post<T, D>(url: string, data: D): Promise<T> {
@@ -23,6 +26,7 @@ const api = {
       fetch(`${baseURL}/api${url}`, {
         method: "POST",
         body: JSON.stringify(data),
+        headers,
       }),
     )
     return result
