@@ -11,6 +11,6 @@ interface Data {
 }
 
 export const getAllSettings = async (): Promise<Data> => {
-  const data = await api.get<Data>("/settings/get")
+  const data = await api.get<Data>("/db/userspace/admin/settings/get")
   return data
 }

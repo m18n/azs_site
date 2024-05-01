@@ -20,5 +20,5 @@ interface Data {
  * deleteAllSettings({ trks: [{id_trk: 1, pists: {id_pist: 1}}] })
  */
 export const deleteAllSettings = async (data: Partial<Data>): Promise<void> => {
-  await api.post("/settings/delete", data)
+  await api.post("/db/userspace/admin/settings/delete", data)
 }

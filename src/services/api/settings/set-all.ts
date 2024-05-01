@@ -17,5 +17,5 @@ interface Data {
  * Ми можемо присвоювати значення різним типам об'єктів в одному запиті
  */
 export const setAllSettings = async (data: Partial<Data>): Promise<void> => {
-  await api.post("/settings/set", data)
+  await api.post("/db/userspace/admin/settings/set", data)
 }

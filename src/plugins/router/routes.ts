@@ -3,7 +3,7 @@ import { RouteRecordRaw } from "vue-router"
 export const namedRoutes = [
   {
     name: "settings",
-    path: "/main/settings/configuration",
+    path: "/view/userspace/main/settings/configuration",
     component: () => import("@/pages/SettingsPage.vue"),
   },
 ] as const satisfies RouteRecordRaw[]
