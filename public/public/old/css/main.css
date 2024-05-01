@@ -36,7 +36,8 @@ a{
     color:black;
 }
 .select{
-    background-color: red !important;
+    border: solid 0.3vw red !important;
+   /* background-color: red !important;*/
 }
 .dispensing_unit input{
     font-size: 1.2em;
