@@ -6,14 +6,19 @@ const headers = new Headers()
 headers.set("Content-Type", "application/json")
 
 const handleFetch = async <T>(fn: () => Promise<Response>): Promise<T> => {
-  try {
-    const response = await fn()
-    const data = await response.json()
-    return parseJSON(data) as T
-  } catch (error) {
-    console.log("🚀 ~ error:", error)
-    return null as T
+  const response = await fn()
+  const data = await response.json()
+
+  if (typeof data === "object" && data && "error" in data) {
+    if (data.error === "ConnectErr") {
+      window.location.replace("/settings/dbproperties")
+    }
+    if (data.error === "RequestErr") {
+      window.location.replace("/settings/dberror")
+    }
   }
+
+  return parseJSON(data) as T
 }
 
 const api = {
